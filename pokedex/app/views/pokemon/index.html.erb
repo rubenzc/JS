@@ -1,0 +1,78 @@
+<h1>Pokédex</h1>
+
+<!-- List of pokemon -->
+<ul class="pokedex-list">
+  <% @pokemon.each do |pkmn| %>
+    <li>
+      <button class="js-show-pokemon btn btn-link"
+          data-pokemon-uri="<%= pkmn["resource_uri"] %>">
+        <%= pkmn["name"] %>
+      </button>
+    </li>
+  <% end %>
+</ul>
+
+
+<!-- Pokemon modal view (hidden at first) -->
+<div class="modal fade js-pkmn-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+
+        <h3 class="modal-title">
+          <span class="js-pkmn-name"></span>
+          <small class="js-pkmn-number"></small>
+        </h3>
+      </div><!-- .modal-header -->
+
+      <div class="modal-body">
+        <dl class="dl-horizontal">
+          <dt>Type: </dt>
+          <dd class="js-pkmn-type-name"></dd>
+          <dt>Height: </dt>
+          <dd class="js-pkmn-height"></dd>
+          <dt>Weight: </dt>
+          <dd class="js-pkmn-weight"></dd>
+          <dt>Hp: </dt>
+          <dd class="js-pkmn-hp"></dd>
+          <dt>Attack: </dt>
+          <dd class="js-pkmn-attack"></dd>
+          <dt>Defense: </dt>
+          <dd class="js-pkmn-defense"></dd>
+          <dt>Special attack: </dt>
+          <dd class="js-pkmn-sp_atk"></dd>
+          <dt>Special defense: </dt>
+          <dd class="js-pkmn-sp_def"></dd>
+          <dt>Speed: </dt>
+          <dd class="js-pkmn-speed"></dd>
+        </dl>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-default js-pkmn-btn-evolution" data-dismiss="modal">Evolution</button>
+        </div>
+      </div>
+      <!-- .modal-body -->
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+
+
+<!-- MODAL EVOLUTION -->
+<div class="modal fade js-modal-evolution">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body js-modal-evolution">
+        <dl class="dl-horizontal">
+          <dt>Evolution: </dt>
+          <dd class="js-pkmn-evolution"></dd>
+        </dl>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default js-close-btn-evolution" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
