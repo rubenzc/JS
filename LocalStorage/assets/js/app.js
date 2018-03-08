@@ -23,12 +23,19 @@ function addTweet(e){
 
 	//Read the value from text area
 	const tweet = document.getElementById('tweet').value;
+
+	//Create delete button for each tweet
+	const btnDelete = document.createElement('a');
+	btnDelete.classList = 'borrar-tweet';
+	btnDelete.innerText = 'X';
 	
 	//Create element and add its content to the list
 	const li = document.createElement('li');
 	li.innerText = tweet;
 
-	//appendChild to charge it on the DOM
+	//add delete button to tweet
+	li.appendChild(btnDelete);
+	//Add twwet to the list
 	listaTweets.appendChild(li);
 
 	console.log(tweet);
