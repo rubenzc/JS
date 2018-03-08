@@ -1,20 +1,24 @@
-//Variables
+// Variables
 
 const listaTweets = document.getElementById('lista-tweets');
 
-//Events Listeners
+// Events Listeners
 
 eventListeners();
 
 
 function eventListeners(){
-	//Send form
+	// Send form
 	document.getElementById('formulario').addEventListener('submit', addTweet);
+
+	// Delete tweets
+	listaTweets.addEventListener('click', deleteTweet);
+
 }
 
-//Functions
+// Functions
 
-//Add tweet from form
+// Add tweet from form
 function addTweet(e){
 
 //We use the prevent default to avoid execute the action
@@ -38,6 +42,16 @@ function addTweet(e){
 	//Add twwet to the list
 	listaTweets.appendChild(li);
 
-	console.log(tweet);
+}
 
+
+function deleteTweet(e){
+
+	e.preventDefault();
+	// Delegation
+	if(e.target.className === 'borrar-tweet'){
+		console.log(e.target.parentElement.remove());
+		alert("Your tweet will be deleted!!");
+	}
+	
 }
