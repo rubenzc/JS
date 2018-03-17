@@ -2,6 +2,7 @@
 
 const shopCart = document.getElementById('carrito');
 const courses = document.getElementById('lista-cursos');
+const coursesList = document.querySelector('#lista-carrito tbody');
 
 // LISTENERS
 
@@ -30,5 +31,30 @@ function buyCourse(e){
 
 //Function to read data course
 function readCourseData(course){
-	console.log(course);
+	//object with info course
+	const infoCourse = {
+		imagen: course.querySelector('img').src,
+		titulo: course.querySelector('h4').textContent,
+		precio: course.querySelector('.precio span').textContent,
+		id: course.querySelector('a').getAttribute('data-id')
+	}
+
+	addShopCart(infoCourse);
+
+}
+
+function addShopCart(course){
+	const row = document.createElement('tr');
+	row.innerHTML = `
+		<td>  
+		   <img src="${course.imagen}" width=100>
+		</td>
+		<td>${course.titulo}</td>
+		<td>${course.precio}</td>
+		<td>
+		   <a href="#" class="borrar-curso" data-id="${course.id}">X</a>
+		</td>
+     `;
+
+	coursesList.appendChild(row);
 }
