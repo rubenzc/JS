@@ -63,6 +63,8 @@ function addShopCart(course){
      `;
 
 	coursesList.appendChild(row);
+	keepCourseLocalStorage(courses);
+
 }
 
 // Function to delete a course from the DOM
@@ -82,10 +84,37 @@ function deleteCourse(e){
 // Function to delete all courses from the DOM
 function emptyShopCart(){
 	//coursesList.innerHTML = '';
-
 	while(coursesList.firstChild){
 		coursesList.removeChild(coursesList.firstChild);
 	}
-
 	return false;
+}
+
+//Function to add course to local storage
+function keepCourseLocalStorage(course){
+	let courses;
+
+	// Take value form array with LS data or empty
+	courses = getCoursesLocalStorage();
+
+	//Selected course added to array
+	courses.push(course);
+
+	localStorage.setItem('courses', JSON.stringify(courses));
+
+}
+
+//Function to get courses from local storage
+function getCoursesLocalStorage(){
+	let coursesLS;
+
+	//Check if there are courses in LS
+	if(localStorage.getItem('courses') === null){
+		coursesLS = [];
+	}else{
+		//Convert form string to array
+		coursesLS = JSON.parse(localStorage.getItem('courses'));
+	}
+
+	return coursesLS;
 }
