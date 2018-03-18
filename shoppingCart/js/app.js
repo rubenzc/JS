@@ -3,6 +3,7 @@
 const shopCart = document.getElementById('carrito');
 const courses = document.getElementById('lista-cursos');
 const coursesList = document.querySelector('#lista-carrito tbody');
+const emptyShopCartBtn = document.getElementById('vaciar-carrito');
 
 // LISTENERS
 
@@ -14,6 +15,7 @@ chargeEventListeners();
 		
 		// Trigger when click on "Delete from shopping cart (SC)"
 		shopCart.addEventListener('click', deleteCourse);
+		emptyShopCartBtn.addEventListener('click', emptyShopCart);
 
 	}
 
@@ -63,7 +65,7 @@ function addShopCart(course){
 	coursesList.appendChild(row);
 }
 
-// Function to delete shop cart from the DOM
+// Function to delete a course from the DOM
 function deleteCourse(e){
 	e.preventDefault()
 
@@ -75,4 +77,15 @@ function deleteCourse(e){
 
 	}
 
+}
+
+// Function to delete all courses from the DOM
+function emptyShopCart(){
+	//coursesList.innerHTML = '';
+
+	while(coursesList.firstChild){
+		coursesList.removeChild(coursesList.firstChild);
+	}
+
+	return false;
 }
