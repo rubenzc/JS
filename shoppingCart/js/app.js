@@ -11,6 +11,9 @@ chargeEventListeners();
 	function chargeEventListeners(){
 		// Trigger when click on "Add to shopping cart (SC)"
 		courses.addEventListener('click', buyCourse);
+		
+		// Trigger when click on "Delete from shopping cart (SC)"
+		shopCart.addEventListener('click', deleteCourse);
 
 	}
 
@@ -43,6 +46,7 @@ function readCourseData(course){
 
 }
 
+// Function to add course to shop cart
 function addShopCart(course){
 	const row = document.createElement('tr');
 	row.innerHTML = `
@@ -57,4 +61,18 @@ function addShopCart(course){
      `;
 
 	coursesList.appendChild(row);
+}
+
+// Function to delete shop cart from the DOM
+function deleteCourse(e){
+	e.preventDefault()
+
+	let curso;
+
+	if (e.target.classList.contains('borrar-curso')){
+
+		e.target.parentElement.parentElement.remove();
+
+	}
+
 }
