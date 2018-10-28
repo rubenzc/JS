@@ -14,7 +14,7 @@ function eventListeners(){
     //Delete tweets
     tweetsList.addEventListener('click', borrarTweet);
     //Loaded content
-
+    document.addEventListener('DOMContentLoaded', localStorageReady)
 }
 
 
@@ -52,8 +52,29 @@ function borrarTweet(e){
     }
 }
 
+//Show local storage list
+function localStorageReady(){
+    let tweets;
 
-//Add tweet yo local storage
+    tweets = obtenerTweetsLocalStorage();
+
+    tweets.forEach(function(tweet){
+        //Create delete button
+        const botonBorrar = document.createElement('a');
+        botonBorrar.classList = 'borrar-tweet';
+        botonBorrar.innerText = 'X';
+        
+        //Create element and add the content to the list
+        const li = document.createElement('li');
+        li.innerText = tweet;
+        //Add delete button to the tweet
+        li.appendChild(botonBorrar);
+        //Add the tweet to the list
+        tweetsList.appendChild(li);
+    });
+}
+
+//Add tweet to local storage
 function agregarTweetLocalStorage(tweet){
     let tweets;
     tweets = obtenerTweetsLocalStorage();
