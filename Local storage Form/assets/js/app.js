@@ -12,7 +12,7 @@ function eventListeners(){
     document.querySelector('#formulario').addEventListener('submit', agregarTweet);
 
     //Delete tweets
-
+    tweetsList.addEventListener('click', borrarTweet);
     //Loaded content
 
 }
@@ -20,6 +20,7 @@ function eventListeners(){
 
 //Functions
 
+//Add tweet to the form
 function agregarTweet(e){
     e.preventDefault();
     //Read textarea input
@@ -37,6 +38,13 @@ function agregarTweet(e){
     li.appendChild(botonBorrar);
     //Add the tweet to the list
     tweetsList.appendChild(li);
+}
 
+//Delete tweet from the form
+function borrarTweet(e){
+    e.preventDefault();
 
+    if (e.target.className === "borrar-tweet"){
+        e.target.parentElement.remove();
+    }
 }
