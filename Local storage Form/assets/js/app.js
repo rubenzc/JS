@@ -38,6 +38,9 @@ function agregarTweet(e){
     li.appendChild(botonBorrar);
     //Add the tweet to the list
     tweetsList.appendChild(li);
+
+    //Add tweet to local storage
+    agregarTweetLocalStorage(tweet);
 }
 
 //Delete tweet from the form
@@ -47,4 +50,29 @@ function borrarTweet(e){
     if (e.target.className === "borrar-tweet"){
         e.target.parentElement.remove();
     }
+}
+
+
+//Add tweet yo local storage
+function agregarTweetLocalStorage(tweet){
+    let tweets;
+    tweets = obtenerTweetsLocalStorage();
+    
+    //Add the new tweet
+    tweets.push(tweet);
+    //Convert from string to array for local storage
+    localStorage.setItem('tweets', JSON.stringify(tweets));
+}
+
+//Check if there are some elements in local storage. It retuns an array
+
+function obtenerTweetsLocalStorage(){
+    let tweets;
+    //Check local storage value
+    if(localStorage.getItem('tweets') === null){
+        tweets = [];
+    } else {
+        tweets = JSON.parse(localStorage.getItem('tweets'));
+    }
+    return tweets;
 }
