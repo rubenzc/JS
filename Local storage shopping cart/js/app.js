@@ -35,3 +35,20 @@ function leerDatosCurso(curso){
     }
     insertarCarrito(infoCurso);
 }
+
+//Show course selected in the cart
+function insertarCarrito(curso){
+    //Create the card for selected course
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>
+            <img src="${curso.imagen}" width=100>
+        </td>
+        <td>${curso.titulo}</td>
+        <td>${curso.precio}</td>
+        <td>
+            <a href="#" class="borrar-curso" data-id=""${curso.id}>X</a>
+        </td>
+    `;
+    listaCursos.appendChild(row);
+}
