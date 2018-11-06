@@ -17,6 +17,9 @@ function  cargarEventListeners(){
 
     //Remove courses list from cart
     vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+
+    ///Show local storage when document is loaded
+    document.addEventListener('DOMContentLoaded', leerLocalStorage);
 }
 
 //FUNCTIONS
@@ -29,6 +32,7 @@ function comprarCurso(e){
         const curso = e.target.parentElement.parentElement;
         //Take data course selected
         leerDatosCurso(curso);
+
     }
 }
 
@@ -58,6 +62,7 @@ function insertarCarrito(curso){
         </td>
     `;
     listaCursos.appendChild(row);
+    guardarCursosLocalStorage(curso);
 }
 
 //Delete the course from the DOM
@@ -67,7 +72,10 @@ function eliminarCurso(e){
 
     if(e.target.classList.contains('borrar-curso')){
         e.target.parentElement.parentElement.remove();
+        curso = e.target.parentElement.parentElement;
+        cursoId = curso.querySelector('a').getAttribute('data-id');
     }
+    eliminarCursoLocalStorage(cursoId);
 }
 
 //Function to remove all courses from the cart
@@ -75,4 +83,76 @@ function vaciarCarrito(){
     while(listaCursos.firstChild){
         listaCursos.removeChild(listaCursos.firstChild);
     }
+    //Empty Local Storage
+    vaciarLocalStorage();
+
+    return false;
+}
+
+//Add courses to local storage
+function guardarCursosLocalStorage(curso){
+    let cursos;
+    //Take the array value with LS data or empty. It depends of return value obtenerCursosLocalStorage
+    cursos = obtenerCursosLocalStorage();
+
+    //Selected course is added to array
+    cursos.push(curso);
+
+    localStorage.setItem('cursos', JSON.stringify(cursos));
+}
+
+//Check the elements in local storage
+function obtenerCursosLocalStorage(){
+    let cursosLS;
+    //Check if there is something in LS
+    if(localStorage.getItem('cursos') === null){
+        cursosLS = [];
+    } else {
+        cursosLS = JSON.parse(localStorage.getItem('cursos'));
+    }
+    return cursosLS;
+}
+
+//Show local storage courses in cart
+function leerLocalStorage(){
+    let cursosLS;
+    cursosLS = obtenerCursosLocalStorage();
+
+    cursosLS.forEach(function(curso){
+        //Construye el template
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>
+                <img src="${curso.imagen}" width=100>
+            </td>
+            <td>${curso.titulo}</td>
+            <td>${curso.precio}</td>
+            <td>
+                <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
+            </td>
+        `;
+        listaCursos.appendChild(row);
+    });
+
+}
+
+//Remove course by ID from local storage
+
+function eliminarCursoLocalStorage(curso){
+    let cursosLS;
+    //Get the array courses
+    cursosLS = obtenerCursosLocalStorage();
+    //Compare ID removed course and ID LS course
+    cursosLS.forEach(function(cursoLS, index){
+        if (cursoLS.id === curso){
+            cursosLS.splice(index, 1);
+        }
+    });
+    //Add actual array to LS
+    localStorage.setItem('cursos', JSON.stringify(cursosLS));
+}
+
+//Remove all LS elements
+function vaciarLocalStorage(){
+    localStorage.clear();
 }
