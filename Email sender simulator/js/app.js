@@ -3,6 +3,8 @@ const email = document.getElementById('email');
 const asunto = document.getElementById('asunto');
 const mensaje = document.getElementById('mensaje');
 const btnEnviar = document.getElementById('enviar');
+const formularioEnviar = document.getElementById('enviar-mail');
+const resetBtn = document.getElementById('resetBtn');
 
 
 
@@ -20,8 +22,11 @@ function eventlisteners(){
     asunto.addEventListener('blur', validarCampo);
     mensaje.addEventListener('blur', validarCampo);
 
+    //Submit button
+    formularioEnviar.addEventListener('submit', enviarEmail);
 
-
+    //Reset form
+    resetBtn.addEventListener('click', resetFormulario);
 
 }
 
@@ -45,6 +50,48 @@ function validarCampo(){
         validarEmail(this);
     }
 
+    let errores = document.querySelectorAll('.error');
+
+    if(email.value !== '' && asunto.value !== '' && mensaje.value !== ''){
+        
+        if (errores.length === 0){
+            btnEnviar.disabled = false;
+        }
+    }
+
+}
+
+//Send email
+function enviarEmail(e){
+    e.preventDefault();
+    //Show spinner after submit button
+    const spinnerGif = document.querySelector('#spinner');
+    spinnerGif.style.display = 'block';
+
+    //Show gif with mail sent
+    const enviado = document.createElement('img');
+    enviado.src = 'img/mail.gif';
+    enviado.style.display = 'block';
+
+    //Hide spinner and show mail sent gif
+        setTimeout(function(){
+            spinnerGif.style.display = 'none';
+            document.querySelector('#loaders').appendChild(enviado);
+
+            setTimeout(function(){
+                enviado.style.display = 'none';
+                formularioEnviar.reset();
+            }, 5000);
+
+        }, 3000);
+        e.preventDefault();
+
+}
+
+//Reset form
+function resetFormulario(e){
+    formularioEnviar.reset();
+    e.preventDefault();
 }
 
 //Check input length in the fields
