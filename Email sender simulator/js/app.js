@@ -60,4 +60,17 @@ function validarLongitud(campo){
 
 }
 
-//
+//Check email field
+
+function validarEmail(campo){
+    const mensaje = campo.value;
+
+    if(mensaje.indexOf('@') !== -1){
+        campo.style.borderBottomColor = 'green';
+        campo.classList.remove('error');
+    } else {
+        campo.style.borderBottomColor = 'red';
+        campo.classList.add('error');
+    }
+
+}
