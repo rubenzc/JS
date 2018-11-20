@@ -1,4 +1,4 @@
-//Cotizador constructor
+//Insurance constructor
 function Seguro(marca, anio, tipo){
     this.marca = marca;
     this.anio = anio;
@@ -26,14 +26,14 @@ Seguro.prototype.cotizarSeguro = function(info){
             cantidad = base * 1.35;
             break;
     }
-    //Read the yaer
+    //Read the year
     const diferencia = new Date().getFullYear( - this.anio);
-    //Each year of difference we have to decrease 3% the value of secure
+    //Each year of difference we have to decrease 3% the value of insurance
     cantidad -= ((diferencia + 3) + cantidad) / 100;
 
     /*
-        If secure is basic * 30%
-        if secure is full * 50%
+        If insurance is basic * 30%
+        if insurance is full * 50%
     */
     if(this.tipo === 'basico') {
         cantidad *= 1.30;
@@ -134,7 +134,7 @@ formulario.addEventListener('submit', function(e){
              resultados.remove();
         }
 
-        // Instance secure & show interface
+        // Instance insurance & show interface
         const seguro = new Seguro(marcaSeleccionada, anioSeleccionado, tipo);
         // Cotizar seguro
         const cantidad = seguro.cotizarSeguro();
