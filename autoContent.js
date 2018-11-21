@@ -101,25 +101,25 @@ datesToEvaluate(start, end);
 //Automate for a date range
 function dateToEvaluate() {
 
-    if (Mirai.query('.temporal-content').length) {
+    if (Mirai.query('.temporal-content').length){
+    
+      //Date format: ('Day/month/year 00:00')
+      var today = new Date();
 
-        //Date format: ('Day/month/year 00:00')
-        var today = new Date();
-        
         Mirai.query('.temporal-content').each(function() {
             
-            var start = new Date( Mirai.query(this).attr('data-start') );
-            var end = new Date( Mirai.query(this).attr('data-end') );
+                var start = new Date( Mirai.query(this).attr('data-start') );
+                var end = new Date( Mirai.query(this).attr('data-end') );
 
-            //Compare today and selected day to show the content (hours, minutes, second, miliseconds)
-            if( (today.setHours(0,0,0,0) <= start.setHours(0,0,0,0)) && (today.setHours(0,0,0,0) >= end.setHours(0,0,0,0)) ) {
-                Mirai.query(this).remove();
-                console.log("Nope!!");
-            } else {
-                console.log("YES!!");
-            }
+                  //Compare today and selected day to show the content (hours, minutes, second, miliseconds)
+                  if ( Mirai.query(this).attr('data-start') && ( (today.setHours(0,0,0,0) < start.setHours(0,0,0,0)) || (today.setHours(0,0,0,0) > end.setHours(0,0,0,0)) ))  {   
+                      Mirai.query(this).remove();
+                  } else if ( (today.setHours(0,0,0,0) > end.setHours(0,0,0,0)) ) {
+                      Mirai.query(this).remove();
+                  }
             
         });
     }
 }
+
 dateToEvaluate();
