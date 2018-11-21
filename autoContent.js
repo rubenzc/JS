@@ -91,3 +91,35 @@ function datesToEvaluate(start, end){
 var start = new Date('11/4/2018');
 var end = new Date('11/15/2018');
 datesToEvaluate(start, end);
+
+
+
+////////////// FUNCTION TO USE DATA FROM HTML
+
+// <div class="temporal-content" data-start="11/21/2018" data-end="11/23/2018"></div>
+
+//Automate for a date range
+function dateToEvaluate() {
+
+    if (Mirai.query('.temporal-content').length) {
+
+        //Date format: ('Day/month/year 00:00')
+        var today = new Date();
+        
+        Mirai.query('.temporal-content').each(function() {
+            
+            var start = new Date( Mirai.query(this).attr('data-start') );
+            var end = new Date( Mirai.query(this).attr('data-end') );
+
+            //Compare today and selected day to show the content (hours, minutes, second, miliseconds)
+            if( (today.setHours(0,0,0,0) <= start.setHours(0,0,0,0)) && (today.setHours(0,0,0,0) >= end.setHours(0,0,0,0)) ) {
+                Mirai.query(this).remove();
+                console.log("Nope!!");
+            } else {
+                console.log("YES!!");
+            }
+            
+        });
+    }
+}
+dateToEvaluate();
