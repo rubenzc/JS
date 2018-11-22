@@ -94,31 +94,41 @@ datesToEvaluate(start, end);
 
 
 
+
 ////////////// FUNCTION TO USE DATA FROM HTML
 
-// <div class="temporal-content" data-start="11/21/2018" data-end="11/23/2018"></div>
+// <div class="temporal-content" data-start="mm/dd/yyyy" data-end="mm/dd/yyyy"></div>
 
 //Automate for a date range
 function dateToEvaluate() {
 
-    if (Mirai.query('.temporal-content').length){
+    if ( (Mirai.query('.temporal-content').length) && (Mirai.query('.temporal-content').attr('data-end')) ) {
     
       //Date format: ('Day/month/year 00:00')
-      var today = new Date();
+      var today = new Date().setHours(0,0,0,0);
 
+        //Loop for each temporal content:
         Mirai.query('.temporal-content').each(function() {
             
-                var start = new Date( Mirai.query(this).attr('data-start') );
-                var end = new Date( Mirai.query(this).attr('data-end') );
+                var end = new Date( Mirai.query(this).attr('data-end') ).setHours(0,0,0,0);
 
-                  //Compare today and selected day to show the content (hours, minutes, second, miliseconds)
-                  if ( Mirai.query(this).attr('data-start') && ( (today.setHours(0,0,0,0) < start.setHours(0,0,0,0)) || (today.setHours(0,0,0,0) > end.setHours(0,0,0,0)) ))  {   
-                      Mirai.query(this).remove();
-                  } else if ( (today.setHours(0,0,0,0) > end.setHours(0,0,0,0)) ) {
-                      Mirai.query(this).remove();
-                  }
-            
+                //If start date is included
+                if ( Mirai.query(this).attr('data-start') ) {
+
+                    var start = new Date( Mirai.query(this).attr('data-start') ).setHours(0,0,0,0);
+                
+                    //Compare today and selected days to show the content (hours, minutes, second, miliseconds)
+                    if ( (today < start) || (today > end) )  {   
+                        Mirai.query(this).remove();
+                    }
+
+                //If start date is not included
+                } else if ( today > end ) {
+                    Mirai.query(this).remove();
+                }   
         });
+    } else {
+        console.log('Mete la fecha final capullo!!!');
     }
 }
 
