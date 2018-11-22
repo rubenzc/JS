@@ -120,15 +120,17 @@ function dateToEvaluate() {
                     //Compare today and selected days to show the content (hours, minutes, second, miliseconds)
                     if ( (today < start) || (today > end) )  {   
                         Mirai.query(this).remove();
+                    } else {
+                        Mirai.query(this).addClass('temporal-content-active');
                     }
 
                 //If start date is not included
                 } else if ( today > end ) {
                     Mirai.query(this).remove();
-                }   
+                } else {
+                    Mirai.query(this).addClass('temporal-content-active');
+                }
         });
-    } else {
-        console.log('Mete la fecha final capullo!!!');
     }
 }
 
